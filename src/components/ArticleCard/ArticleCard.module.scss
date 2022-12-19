@@ -1,0 +1,28 @@
+.card {
+    display: flex;
+    width: 940px;
+    //height: 100px;
+    //background: #39bae7;
+    border: aquamarine 2px solid;
+    border-radius: 5px;
+
+    &__left {
+
+    }
+
+    &__header {
+        display: flex;
+    }
+
+    &__autor {
+
+    }
+
+    &__img {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+

@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useGetArticlesQuery } from './redux'
+import ArticlesList from './components/ArticlesList'
 
 function App() {
+  const { data = [], isLoading } = useGetArticlesQuery()
+  if (isLoading) {
+    return <h1>Загрузка информации</h1>
+  }
+  console.log(data.articles)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <span>Hello</span>
+      <ArticlesList arrArticles={data.articles} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
