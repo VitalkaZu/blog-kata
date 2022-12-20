@@ -7,7 +7,10 @@ export const blogApi = createApi({
     getArticles: build.query({
       query: (offset = 0) => `articles?limit=5&offset=${offset}`,
     }),
+    getArticle: build.query({
+      query: (slug) => `articles/${slug}`,
+    }),
   }),
 })
 
-export const { useGetArticlesQuery } = blogApi
+export const { useGetArticlesQuery, useGetArticleQuery } = blogApi

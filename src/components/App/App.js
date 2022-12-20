@@ -6,16 +6,23 @@ import './reset.scss'
 import './glogal.scss'
 import Header from '../Header'
 import Home from '../Pages/Home'
+import SignUp from '../Pages/SignUp'
+import SignIn from '../Pages/SignIn'
+import ArticlePage from '../Pages/ArticlePage'
 
 function App() {
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
+    <Routes>
+      <Route path="/" element={<Header />}>
+        <Route index element={<Home />} />
         <Route path="/articles" element={<ArticlesList />} />
-      </Routes>
-    </>
+        <Route path="/articles/:slug" element={<ArticlePage />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/profile" element={<SignIn />} />
+        /profile
+      </Route>
+    </Routes>
   )
 }
 

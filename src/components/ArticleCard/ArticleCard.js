@@ -1,15 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import Markdown from 'markdown-to-jsx'
 import Tag from '../UI/Tag'
 import s from './ArticleCard.module.scss'
 import Like from '../Like'
 import User from '../UI/User/User'
 
-function ArticleCard({ article }) {
+function ArticleCard({ article, markDown, onClick }) {
   return (
-    <li className={s.card}>
+    <li className={`${s.card} wrapper`}>
       <div className={s.card__left}>
         <div className={s.card__header}>
-          <h3 className={s.card__title}>{article.title}</h3>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <Link to={`/articles/${article.slug}`} className={s.card__title} onClick={onClick}>
+            {article.title}
+          </Link>
           <Like count={article.favoritesCount} />
         </div>
         <ul>
@@ -28,6 +33,11 @@ function ArticleCard({ article }) {
         <span>{article.description}</span>
       </div>
       <User username={article.author.username} createDate={article.createdAt} image={article.author.image} />
+      {markDown && (
+        <div className={s.card__markdown}>
+          <Markdown>{markDown}</Markdown>
+        </div>
+      )}
     </li>
   )
 }
