@@ -1,5 +1,9 @@
 .list {
     display: flex;
     flex-direction: column;
-    gap: 10px
+    gap: 26px;
+
+    &__pagination {
+        text-align: center;
+    }
 }

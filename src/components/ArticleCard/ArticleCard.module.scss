@@ -1,28 +1,35 @@
+@import "src/accets/variables";
+
 .card {
     display: flex;
-    width: 940px;
+    width: 100%;
+    padding: 15px 15px 15px 19px;
     //height: 100px;
     //background: #39bae7;
-    border: aquamarine 2px solid;
+    background: white;
+    //border: aquamarine 2px solid;
     border-radius: 5px;
+    align-items: flex-start;
+    justify-content: space-between;
+    filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
 
     &__left {
-
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
     }
 
     &__header {
         display: flex;
+        align-items: center;
+        gap: 13px;
+
     }
 
-    &__autor {
-
-    }
-
-    &__img {
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        object-fit: cover;
+    &__title {
+        color: $info_color;
+        font-size: 20px;
+        line-height: 28px;
     }
 }
 

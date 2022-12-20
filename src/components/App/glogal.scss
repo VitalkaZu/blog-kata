@@ -1,0 +1,11 @@
+@import "src/accets/variables";
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: $color_background;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: $wrapper_width;
+}

@@ -1,22 +1,33 @@
 import React from 'react'
 import Tag from '../UI/Tag'
 import s from './ArticleCard.module.scss'
+import Like from '../Like'
+import User from '../UI/User/User'
 
 function ArticleCard({ article }) {
   return (
     <li className={s.card}>
       <div className={s.card__left}>
         <div className={s.card__header}>
-          <h3>{article.title}</h3>
-          <span>♥ {article.favoritesCount}</span>
+          <h3 className={s.card__title}>{article.title}</h3>
+          <Like count={article.favoritesCount} />
         </div>
-        {article.tagList && article.tagList.map((tag) => <Tag label={tag} />)}
+        <ul>
+          {
+            article.tagList &&
+              article.tagList.map((tag, index) => {
+                const tagTrim = tag.trim()
+                if (tagTrim.length > 0 && tagTrim.length < 30) {
+                  return <Tag key={index} label={tagTrim} />
+                }
+                return false
+              })
+            // (tag.trim().length > 0 < 30 ? <Tag key={index} label={tag} /> : null))
+          }
+        </ul>
         <span>{article.description}</span>
       </div>
-      <div className={s.card__autor}>
-        <span>{article.author.username}</span>
-        <img className={s.card__img} src={article.author.image} alt="author" />
-      </div>
+      <User username={article.author.username} createDate={article.createdAt} image={article.author.image} />
     </li>
   )
 }

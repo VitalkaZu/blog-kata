@@ -5,7 +5,7 @@ export const blogApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api/' }),
   endpoints: (build) => ({
     getArticles: build.query({
-      query: () => 'Articles',
+      query: (offset = 0) => `articles?limit=5&offset=${offset}`,
     }),
   }),
 })

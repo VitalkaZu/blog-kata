@@ -1,0 +1,19 @@
+@import './src/accets/variables';
+
+.like {
+  display: flex;
+  gap: 5px;
+  color: $color_text_1;
+  //position: absolute;
+
+  &:before {
+    background-image: url("hart.png");
+    height: 16px;
+    width: 16px;
+    content: "";
+    //position: relative;
+    //top: 0;
+    //left: 0;
+
+  }
+}
