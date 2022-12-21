@@ -1,0 +1,66 @@
+@import "src/accets/variables";
+
+.card {
+  background: white;
+  padding: 48px 32px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 384px;
+  gap: 21px;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  &__input {
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 24px;
+
+    &:focus {
+      border: solid 1px $info_color;
+    }
+
+    &::placeholder {
+      color: #BFBFBF;
+    }
+  }
+
+  &__submit {
+    background: $info_color;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__checkbox {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 22px;
+    color: #595959;
+  }
+
+  &__error {
+    color: red;
+  }
+}
+
+.error {
+  border-color: red;
+}

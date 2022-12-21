@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useGetArticleQuery } from '../../redux'
-import ArticleCard from '../ArticleCard'
+import { useGetArticleQuery } from '../redux'
+import ArticleCard from '../components/ArticleCard'
 
 function ArticlePage({ slug }) {
   console.log(useParams())
