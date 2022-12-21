@@ -5,10 +5,10 @@ import ArticlesList from '../ArticlesList'
 import './reset.scss'
 import './glogal.scss'
 import Header from '../Header'
-import Home from '../../Pages/Home'
-import SignUp from '../../Pages/SignUp/SignUp'
-import SignIn from '../../Pages/SignIn'
-import ArticlePage from '../../Pages/ArticlePage'
+import Home from '../../pages/Home'
+import SignUp from '../../pages/SignUp/SignUp'
+import SignIn from '../../pages/SignIn'
+import ArticlePage from '../../pages/ArticlePage'
 
 function App() {
   return (

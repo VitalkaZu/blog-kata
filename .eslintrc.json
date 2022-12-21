@@ -23,6 +23,7 @@
     "prettier/prettier": ["warn", { "endOfLine": "auto" }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": [0, "unix"],
+    "no-param-reassign": ["error", { "props": false }],
     "operator-linebreak": [
       "error",
       "after",

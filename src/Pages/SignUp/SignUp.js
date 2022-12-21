@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSelector, useDispatch } from 'react-redux'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
+import { authUser } from '../../redux/slices/userSlice'
 import s from './SignUp.module.scss'
+import { useRegisterUserMutation } from '../../redux'
 
 function SignUp() {
+  const dispatch = useDispatch()
+  const { token } = useSelector((state) => state.userReducer)
+  console.log(token)
   const formSchema = yup.object().shape({
     username: yup
       .string()
@@ -24,9 +31,7 @@ function SignUp() {
       .min(4, 'Password length should be at least 4 characters')
       .max(12, 'Password cannot exceed more than 12 characters')
       .oneOf([yup.ref('password')], 'Passwords do not match'),
-    agree: yup
-      .bool()
-      .oneOf([true], 'You mast agree')
+    agree: yup.bool().oneOf([true], 'You mast agree'),
   })
 
   const {
@@ -41,8 +46,30 @@ function SignUp() {
     resolver: yupResolver(formSchema),
   })
 
+  const [registerUser, result] = useRegisterUserMutation()
+
+  useEffect(() => {
+    if (result.data) {
+      dispatch(
+        authUser({
+          token: result.data.user.token,
+          email: result.data.user.email,
+          username: result.data.user.username,
+        })
+      )
+      console.log(result.data.user.token)
+    }
+  }, [result])
+
   const onSubmit = (data) => {
     console.log(data)
+    registerUser({
+      user: {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      },
+    })
     reset()
   }
   return (
@@ -85,14 +112,12 @@ function SignUp() {
             className={classNames(s.card__input, { [s.error]: errors.cpassword })}
             {...register('cpassword')}
           />
-          <div className={s.card__error}>
-            {errors?.cpassword && <p>{errors?.cpassword?.message}</p>}
-          </div>
+          <div className={s.card__error}>{errors?.cpassword && <p>{errors?.cpassword?.message}</p>}</div>
         </label>
         <label className={s.card__checkbox}>
           <input
             type="checkbox"
-            placeholder="agree"
+            className={classNames(s.card__input, { [s.error]: errors.agree })}
             // className={s.card__input}
             {...register('agree')}
           />
@@ -101,8 +126,15 @@ function SignUp() {
         <div className={s.card__error}>{errors?.agree && <p>{errors?.agree?.message}</p>}</div>
         <input className={s.card__submit} type="submit" />
       </form>
+      <p className={s.card__footer}>
+        Already have an account? <Link to="/sign-in">Sign In</Link>.
+      </p>
     </div>
   )
 }
 
 export default SignUp
+
+// username(pin):"vitalka"
+// email(pin):"vvv@vvv.ru"
+// pass '123456'

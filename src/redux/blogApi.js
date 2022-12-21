@@ -10,7 +10,19 @@ export const blogApi = createApi({
     getArticle: build.query({
       query: (slug) => `articles/${slug}`,
     }),
+    registerUser: build.mutation({
+      query(body) {
+        return {
+          url: 'users',
+          method: 'POST',
+          body,
+        }
+      },
+      // Invalidates all Post-type queries providing the `LIST` id - after all, depending of the sort order,
+      // that newly created post could show up in any lists.
+      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+    }),
   }),
 })
 
-export const { useGetArticlesQuery, useGetArticleQuery } = blogApi
+export const { useGetArticlesQuery, useGetArticleQuery, useRegisterUserMutation } = blogApi
