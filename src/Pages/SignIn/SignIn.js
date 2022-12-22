@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { setUser } from '../../redux/slices/userSlice'
 import s from './SignUp.module.scss'
 import { useLoginUserMutation } from '../../redux'
+// import { useAuth } from '../../hooks/useAuth'
 
 function SignIn() {
   const dispatch = useDispatch()
@@ -39,11 +40,9 @@ function SignIn() {
   useEffect(() => {
     if (result.data) {
       dispatch(
-        setUser({
-          token: result.data.user.token,
-          email: result.data.user.email,
-          username: result.data.user.username,
-        })
+        setUser(
+          result.data
+        )
       )
       console.log(result.data.user.token)
     }
