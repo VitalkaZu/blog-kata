@@ -7,31 +7,19 @@ import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { setUser } from '../../redux/slices/userSlice'
 import s from './SignUp.module.scss'
-import { useRegisterUserMutation } from '../../redux'
+import { useLoginUserMutation } from '../../redux'
 
-function SignUp() {
+function SignIn() {
   const dispatch = useDispatch()
   const { token } = useSelector((state) => state.userReducer)
   console.log(token)
   const formSchema = yup.object().shape({
-    username: yup
-      .string()
-      .required('Username is required')
-      .min(3, 'Username length should be at least 3 characters')
-      .max(20, 'Username cannot exceed more than 20 characters'),
     email: yup.string().required('Email is required').email('Put your email'),
     password: yup
       .string()
       .required('Password is required')
       .min(6, 'Password length should be at least 6 characters')
       .max(40, 'Password cannot exceed more than 40 characters'),
-    cpassword: yup
-      .string()
-      .required('Confirm Password is required')
-      .min(6, 'Password length should be at least 6 characters')
-      .max(40, 'Password cannot exceed more than 40 characters')
-      .oneOf([yup.ref('password')], 'Passwords do not match'),
-    agree: yup.bool().oneOf([true], 'You mast agree'),
   })
 
   const {
@@ -46,7 +34,7 @@ function SignUp() {
     resolver: yupResolver(formSchema),
   })
 
-  const [registerUser, result] = useRegisterUserMutation()
+  const [registerUser, result] = useLoginUserMutation()
 
   useEffect(() => {
     if (result.data) {
@@ -74,17 +62,8 @@ function SignUp() {
   }
   return (
     <div className={`${s.card} wrapper`}>
-      <h1>Create new account</h1>
+      <h1>Sign In</h1>
       <form className={s.card__form} onSubmit={handleSubmit(onSubmit)}>
-        <label className={s.card__label}>
-          Username
-          <input
-            placeholder="Username"
-            className={classNames(s.card__input, { [s.error]: errors.username })}
-            {...register('username')}
-          />
-          <div className={s.card__error}>{errors?.username && <p>{errors?.username?.message}</p>}</div>
-        </label>
         <label className={s.card__label}>
           Email address
           <input
@@ -104,36 +83,16 @@ function SignUp() {
           />
           <div className={s.card__error}>{errors?.password && <p>{errors?.password?.message}</p>}</div>
         </label>
-        <label className={s.card__label}>
-          Repeat Password
-          <input
-            type="password"
-            placeholder="Repeat Password"
-            className={classNames(s.card__input, { [s.error]: errors.cpassword })}
-            {...register('cpassword')}
-          />
-          <div className={s.card__error}>{errors?.cpassword && <p>{errors?.cpassword?.message}</p>}</div>
-        </label>
-        <label className={s.card__checkbox}>
-          <input
-            type="checkbox"
-            className={classNames(s.card__input, { [s.error]: errors.agree })}
-            // className={s.card__input}
-            {...register('agree')}
-          />
-          I agree to the processing of my personal information
-        </label>
-        <div className={s.card__error}>{errors?.agree && <p>{errors?.agree?.message}</p>}</div>
         <input className={s.card__submit} type="submit" />
       </form>
       <p className={s.card__footer}>
-        Already have an account? <Link to="/sign-in">Sign In</Link>.
+        Don’t have an account? <Link to="/sign-up">Sign Up</Link>.
       </p>
     </div>
   )
 }
 
-export default SignUp
+export default SignIn
 
 // username(pin):"vitalka"
 // email(pin):"vvv@vvv.ru"

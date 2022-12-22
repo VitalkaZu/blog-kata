@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const blogApi = createApi({
   reducerPath: 'blogApi',
+  tagTypes: ['User'],
   baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api/' }),
   endpoints: (build) => ({
     getArticles: build.query({
@@ -18,11 +19,26 @@ export const blogApi = createApi({
           body,
         }
       },
-      // Invalidates all Post-type queries providing the `LIST` id - after all, depending of the sort order,
-      // that newly created post could show up in any lists.
-      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+    }),
+    loginUser: build.mutation({
+      query(body) {
+        return {
+          url: 'users/login',
+          method: 'POST',
+          body,
+        }
+      },
+    }),
+    getProfile: build.query({
+      query: (username) => `profiles/${username}`,
     }),
   }),
 })
 
-export const { useGetArticlesQuery, useGetArticleQuery, useRegisterUserMutation } = blogApi
+export const {
+  useGetArticlesQuery,
+  useGetArticleQuery,
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useGetProfileQuery,
+} = blogApi
