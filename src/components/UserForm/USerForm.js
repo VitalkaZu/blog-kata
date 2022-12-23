@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 // import { useDispatch } from 'react-redux'
 // import { yupResolver } from '@hookform/resolvers/yup'
 // import * as yup from 'yup'
-// import classNames from 'classnames'
+import classNames from 'classnames'
 // import { Link } from 'react-router-dom'
 // import { setUser } from '../../redux/slices/userSlice'
 import s from './SignUp.module.scss'
@@ -41,7 +41,7 @@ function UserForm({ template }) {
     // watch,
     // getValues,
     // reset,
-    // formState: { errors },
+    formState: { errors },
   } = useForm({
     mode: 'onTouched',
     // resolver: yupResolver(formSchema),
@@ -74,22 +74,23 @@ function UserForm({ template }) {
     // reset()
   }
 
-  const renderFields = (arrFields) => {
+  const renderFields = (arrFields) => (
     arrFields.map((field) => {
-      console.log(field)
+      const { label, name, type, placeholder, validationProps } = field
       return (
         <label className={s.card__label}>
-          {field.label}
+          {label}
           <input
-            placeholder={field.placeholder}
-            // className={classNames(s.card__input, { [s.error]: errors[field.name] })}
-            {...register(field.name)}
+            type={type}
+            placeholder={placeholder}
+            className={classNames(s.card__input, { [s.error]: errors[name] })}
+            {...register(name, validationProps)}
           />
-          {/* <div className={s.card__error}>{errors?.username && <p>{errors?.username?.message}</p>}</div> */}
+          <div className={s.card__error}>{errors?.[name] && <p>{errors?.[name].message}</p>}</div>
         </label>
       )
     })
-  }
+  )
 
   return (
     <div className={`${s.card} wrapper`}>

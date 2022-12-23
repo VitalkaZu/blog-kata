@@ -26,7 +26,7 @@ function Header() {
   return (
     <>
       <div className={s.header}>
-        <span className={s.header__title}>Realworld Blog</span>
+        <Link to="/" className={s.header__title}>Realworld Blog</Link>
         <div className={s.header__right}>
           {isAuth ? (
             <>

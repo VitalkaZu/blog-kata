@@ -15,6 +15,9 @@ function Home() {
         <li>
           <Link to="/sign-in">Логин</Link>
         </li>
+        <li>
+          <Link to="/profile">Профиль</Link>
+        </li>
       </ul>
     </div>
   )
