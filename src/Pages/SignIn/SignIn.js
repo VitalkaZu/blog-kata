@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import classNames from 'classnames'
@@ -12,8 +12,7 @@ import { useLoginUserMutation } from '../../redux'
 
 function SignIn() {
   const dispatch = useDispatch()
-  const { token } = useSelector((state) => state.userReducer)
-  console.log(token)
+  // const { token } = useSelector((state) => state.userReducer)
   const formSchema = yup.object().shape({
     email: yup.string().required('Email is required').email('Put your email'),
     password: yup
@@ -35,28 +34,23 @@ function SignIn() {
     resolver: yupResolver(formSchema),
   })
 
-  const [registerUser, result] = useLoginUserMutation()
+  const [registerUser] = useLoginUserMutation()
 
-  useEffect(() => {
-    if (result.data) {
-      dispatch(
-        setUser(
-          result.data
-        )
-      )
-      console.log(result.data.user.token)
-    }
-  }, [result])
+  // useEffect(() => {
+  //   if (result.data) {
+  //     dispatch(setUser(result.data))
+  //     console.log(result.data.user.token)
+  //   }
+  // }, [result])
 
   const onSubmit = (data) => {
-    console.log(data)
     registerUser({
       user: {
-        username: data.username,
+        // username: data.username,
         email: data.email,
         password: data.password,
       },
-    })
+    }).then((res) => dispatch(setUser(res.data)))
     reset()
   }
   return (

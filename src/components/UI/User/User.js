@@ -1,5 +1,6 @@
 import React from 'react'
 import { format } from 'date-fns'
+import PropTypes from 'prop-types'
 import s from './User.module.scss'
 
 function User({ username, image, createDate }) {
@@ -13,6 +14,17 @@ function User({ username, image, createDate }) {
       <img className={s.user__img} alt="Avatar" src={image} />
     </div>
   )
+}
+
+User.defaultProps = {
+  image: 'https://static.productionready.io/images/smiley-cyrus.jpg',
+  createDate: null,
+}
+
+User.propTypes = {
+  username: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  createDate: PropTypes.string,
 }
 
 export default User

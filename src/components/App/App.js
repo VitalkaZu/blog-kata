@@ -9,6 +9,7 @@ import Home from '../../Pages/Home'
 import SignUp from '../../Pages/SignUp/SignUp'
 import SignIn from '../../Pages/SignIn/SignIn'
 import ArticlePage from '../../Pages/ArticlePage'
+import UserProfile from '../../Pages/UserProfile'
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route path="/articles/:slug" element={<ArticlePage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/profile" element={<SignIn />} />
+        <Route path="/profile" element={<UserProfile />} />
         /profile
       </Route>
     </Routes>
