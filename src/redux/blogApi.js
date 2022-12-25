@@ -29,6 +29,15 @@ export const blogApi = createApi({
         }
       },
     }),
+    updateUser: build.mutation({
+      query(body) {
+        return {
+          url: 'user',
+          method: 'POST',
+          body,
+        }
+      },
+    }),
     getProfile: build.query({
       query: (username) => `profiles/${username}`,
     }),
@@ -40,5 +49,6 @@ export const {
   useGetArticleQuery,
   useRegisterUserMutation,
   useLoginUserMutation,
+  useUpdateUserMutation,
   useGetProfileQuery,
 } = blogApi

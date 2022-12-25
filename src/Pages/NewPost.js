@@ -1,9 +1,8 @@
 import React from 'react'
+import ArticleForm from '../components/ArticleForm'
 
 function NewPost() {
-  return (
-    <div><h1>New post</h1></div>
-  )
+  return <ArticleForm title="Create new article" />
 }
 
 export default NewPost
