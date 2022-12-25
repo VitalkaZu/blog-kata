@@ -11,6 +11,7 @@ function Header() {
   // const { username, image } = useSelector((state) => state.userReducer.user)
   const dispatch = useDispatch()
   const { isAuth, username, image } = useAuth()
+  console.log(image)
   // const [data] = useGetProfileQuery(username)
   // const { isAuth, username } = useAuth()
 
@@ -26,13 +27,19 @@ function Header() {
   return (
     <>
       <div className={s.header}>
-        <Link to="/" className={s.header__title}>Realworld Blog</Link>
+        <Link to="/" className={s.header__title}>
+          Realworld Blog
+        </Link>
         <div className={s.header__right}>
           {isAuth ? (
             <>
-              <User username={username} image={image} />
+              <Link to="/profile">
+                <User username={username} image={image} />
+              </Link>
               {/* <Link onClick={handlerLogOut}>LogOut</Link> */}
-              <button type="button" onClick={handlerLogOut}>LogOut</button>
+              <button type="button" onClick={handlerLogOut}>
+                LogOut
+              </button>
             </>
           ) : (
             <>

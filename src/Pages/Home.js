@@ -18,6 +18,9 @@ function Home() {
         <li>
           <Link to="/profile">Профиль</Link>
         </li>
+        <li>
+          <Link to="/newarticle">Добавить пост</Link>
+        </li>
       </ul>
     </div>
   )
