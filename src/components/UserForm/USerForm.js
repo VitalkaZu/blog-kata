@@ -1,17 +1,19 @@
-import React from 'react'
+/* eslint-disable indent */
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 // import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 import s from './SignUp.module.scss'
 // import { useRegisterUserMutation } from '../../redux'
 
-function UserForm({ template, onSubmit }) {
+function UserForm({ template, onSubmit, errorsProps }) {
   const { title, fields, submitLabel, footer } = template
 
   const {
     register,
     handleSubmit,
     watch,
+    setError,
     // getValues,
     reset,
     formState: { errors },
@@ -24,6 +26,13 @@ function UserForm({ template, onSubmit }) {
     onSubmit(data)
     reset()
   }
+
+  useEffect(() => {
+    if (errorsProps) {
+      const arrErrorProps = Object.entries(errorsProps)
+      arrErrorProps.forEach(([name, message]) => setError(name, { type: 'manual', message }))
+    }
+  }, [errorsProps])
 
   const renderFields = (arrFields) => arrFields.map((field) => {
     const { label, name, type, placeholder, validationProps, matchField, value } = field
@@ -46,7 +55,7 @@ function UserForm({ template, onSubmit }) {
                 matchField
                   ? {
                     ...validationProps,
-                    validate: (val) => val === watch(matchField.nameField) || matchField.messageError,
+                      validate: (val) => val === watch(matchField.nameField) || matchField.messageError,
                   }
                   : validationProps
               )}
@@ -70,7 +79,11 @@ function UserForm({ template, onSubmit }) {
           </>
         )
       default:
-        return <div><span>Invalid field</span></div>
+        return (
+          <div>
+            <span>Invalid field</span>
+          </div>
+        )
     }
   })
 

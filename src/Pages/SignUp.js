@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 // import classNames from 'classnames'
@@ -17,6 +17,7 @@ import UserForm from '../components/UserForm'
 
 function SignUp() {
   const dispatch = useDispatch()
+  const [errors, setErrors] = useState()
   // const { token } = useSelector((state) => state.userReducer)
   // console.log(token)
 
@@ -131,20 +132,26 @@ function SignUp() {
         email: data.email,
         password: data.password,
       },
-    }).then((res) => dispatch(setUser(res.data)))
+    })
+      .unwrap()
+      .then((res) => dispatch(setUser(res.data)))
+      .catch((e) => {
+        setErrors(e.data.errors)
+        console.log(e)
+      })
   }
 
   const template = {
-    title: 'Sign In',
+    title: 'Create new account',
     fields: [usernameField, emailField, passwordField, confirmPasswordField, argeeCheckBoxField],
     submitLabel: 'Login',
     footer: (
       <>
-        Don’t have an account? <Link to="/sign-up">Sign Up</Link>.
+        Already have an account? <Link to="/sign-in">Sign In</Link>.
       </>
     ),
   }
-  return <UserForm template={template} onSubmit={(data) => onSubmit(data)} />
+  return <UserForm template={template} onSubmit={(data) => onSubmit(data)} errorsProps={errors} />
 }
 
 export default SignUp
