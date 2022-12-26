@@ -6,14 +6,15 @@ import classNames from 'classnames'
 import s from './SignUp.module.scss'
 // import { useRegisterUserMutation } from '../../redux'
 
-function UserForm({ template, onSubmit, errorsProps }) {
+function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
   const { title, fields, submitLabel, footer } = template
-
+  console.log(valuesProps)
   const {
     register,
     handleSubmit,
     watch,
     setError,
+    setValue,
     // getValues,
     // reset,
     formState: { errors },
@@ -33,9 +34,15 @@ function UserForm({ template, onSubmit, errorsProps }) {
       arrErrorProps.forEach(([name, message]) => setError(name, { type: 'manual', message }))
     }
   }, [errorsProps])
+  useEffect(() => {
+    if (valuesProps) {
+      const arrvaluesProps = Object.entries(valuesProps)
+      arrvaluesProps.forEach(([name, val]) => setValue(name, val))
+    }
+  }, [valuesProps])
 
   const renderFields = (arrFields) => arrFields.map((field) => {
-      const { label, name, type, placeholder, validationProps, matchField, value } = field
+      const { label, name, type, placeholder, validationProps, matchField } = field
 
       switch (type) {
         case 'text':
@@ -48,7 +55,6 @@ function UserForm({ template, onSubmit, errorsProps }) {
               <input
                 type={type}
                 placeholder={placeholder}
-                value={value}
                 className={classNames(s.card__input, { [s.error]: errors[name] })}
                 {...register(
                   name,

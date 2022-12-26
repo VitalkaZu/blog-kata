@@ -3,7 +3,21 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const blogApi = createApi({
   reducerPath: 'blogApi',
   tagTypes: ['User'],
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://blog.kata.academy/api/',
+    prepareHeaders: (headers, { getState }) => {
+      const state = getState()
+      // const {
+      //   userSlice: { user }
+      // } = getState()
+      // console.log('token  >>>  ', state.userSlice?.user?.token)
+      // const token = user.token
+      if (state.userSlice.user.token) {
+        headers.set('Authorization', `Bearer ${state.userSlice.user.token}`)
+      }
+      return headers
+    },
+  }),
   endpoints: (build) => ({
     getArticles: build.query({
       query: (offset = 0) => `articles?limit=5&offset=${offset}`,
@@ -33,7 +47,7 @@ export const blogApi = createApi({
       query(body) {
         return {
           url: 'user',
-          method: 'POST',
+          method: 'PUT',
           body,
         }
       },
