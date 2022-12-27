@@ -5,8 +5,23 @@ import Tag from '../UI/Tag'
 import s from './ArticleCard.module.scss'
 import Like from '../Like'
 import User from '../UI/User/User'
+// import { useFavoriteArticleMutation, useUnFavoriteArticleMutation } from '../redux'
+import { useFavoriteArticleMutation, useUnFavoriteArticleMutation } from '../../redux'
 
 function ArticleCard({ article, markDown, onClick }) {
+  const [like] = useFavoriteArticleMutation()
+  const [dislike] = useUnFavoriteArticleMutation()
+
+  const handleLike = async (slug) => {
+    if (article.favorited) {
+      await dislike(slug)
+      console.log('dislike', slug)
+    } else {
+      await like(slug)
+      console.log('like', slug)
+    }
+  }
+
   return (
     <li className={`${s.card} wrapper`}>
       <div className={s.card__left}>
@@ -15,7 +30,11 @@ function ArticleCard({ article, markDown, onClick }) {
           <Link to={`/articles/${article.slug}`} className={s.card__title} onClick={onClick}>
             {article.title}
           </Link>
-          <Like count={article.favoritesCount} />
+          <Like
+            count={article.favoritesCount}
+            favorited={article.favorited}
+            handleLike={() => handleLike(article.slug)}
+          />
         </div>
         <ul>
           {

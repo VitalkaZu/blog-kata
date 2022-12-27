@@ -7,13 +7,17 @@
   //position: absolute;
 
   &:before {
-    background-image: url("hart.png");
+    background-image: url("hart.png") ;
     height: 16px;
     width: 16px;
     content: "";
-    //position: relative;
-    //top: 0;
-    //left: 0;
+    background-repeat: no-repeat;
 
+  }
+}
+
+.favorited {
+  &:before {
+    background-image: url("hartRed.png");
   }
 }

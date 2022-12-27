@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const blogApi = createApi({
   reducerPath: 'blogApi',
-  tagTypes: ['User'],
+  tagTypes: ['Article'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://blog.kata.academy/api/',
     prepareHeaders: (headers, { getState }) => {
@@ -21,9 +21,11 @@ export const blogApi = createApi({
   endpoints: (build) => ({
     getArticles: build.query({
       query: (offset = 0) => `articles?limit=5&offset=${offset}`,
+      providesTags: ['Article'],
     }),
     getArticle: build.query({
       query: (slug) => `articles/${slug}`,
+      providesTags: ['Article'],
     }),
     registerUser: build.mutation({
       query(body) {
@@ -55,6 +57,24 @@ export const blogApi = createApi({
     getProfile: build.query({
       query: (username) => `profiles/${username}`,
     }),
+    favoriteArticle: build.mutation({
+      query(slug) {
+        return {
+          url: `/articles/${slug}/favorite`,
+          method: 'POST',
+        }
+      },
+      invalidatesTags: ['Article'],
+    }),
+    unFavoriteArticle: build.mutation({
+      query(slug) {
+        return {
+          url: `/articles/${slug}/favorite`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: ['Article'],
+    }),
   }),
 })
 
@@ -64,5 +84,7 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useUpdateUserMutation,
+  useFavoriteArticleMutation,
+  useUnFavoriteArticleMutation,
   useGetProfileQuery,
 } = blogApi

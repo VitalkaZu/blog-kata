@@ -6,7 +6,32 @@ import s from './ArticleForm.module.scss'
 
 function ArticleForm({ title, article }) {
   console.log(article)
-  const [tags] = useState(['hello', 'second tag'])
+  const [newTag, setNewTag] = useState()
+  const [tags, setTags] = useState(['hello', 'second tag'])
+
+  const addTag = (tag) => {
+    setTags([...tags, tag])
+    console.log('add tag >>>', tag)
+  }
+
+  const deleteTag = (tag) => {
+    const remainingTags = tags.filter((t) => t !== tag)
+    setTags([...remainingTags])
+    console.log('delete tag >>>', tag)
+  }
+
+  const handleAddTag = () => {
+    addTag(newTag)
+    setNewTag('')
+  }
+
+  // const updateTag = (tag, newValue) => {
+  //   const index = tags.indexOf(tag)
+  //   const before = tag.slice(0, index)
+  //   const after = tag.slice(index + 1)
+  //   setTags(...before, newValue, ...after)
+  //   console.log('update tag >>>', tag)
+  // }
 
   const {
     register,
@@ -16,9 +41,7 @@ function ArticleForm({ title, article }) {
     // getValues,
     // reset,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm()
 
   const onSubmitForm = (data) => {
     console.log(data)
@@ -28,18 +51,29 @@ function ArticleForm({ title, article }) {
     <>
       {arrTag.map((tag) => (
         <li className={s.itemTags}>
-          <input placeholder="Tag" value={tag} className={classNames(s.card__input, { [s.error]: errors.body })} />
-          <button className={s.deleteBtn} type="button">
+          <input
+            placeholder="Tag"
+            value={tag}
+            disabled
+            className={classNames(s.card__input, { [s.error]: errors.body })}
+            // onChange={(e) => updateTag(tag, e.target.value)}
+          />
+          <button className={s.deleteBtn} type="button" onClick={() => deleteTag(tag)}>
             Delete
           </button>
         </li>
       ))}
       <li className={s.itemTags}>
-        <input placeholder="Tag" className={classNames(s.card__input, { [s.error]: errors.body })} />
+        <input
+          placeholder="Tag"
+          className={classNames(s.card__input, { [s.error]: errors.body })}
+          value={newTag}
+          onChange={(e) => setNewTag(e.target.value)}
+        />
         <button className={s.deleteBtn} type="button">
           Delete
         </button>
-        <button className={s.addBtn} type="button">
+        <button className={s.addBtn} type="button" onClick={handleAddTag}>
           Add tag
         </button>
       </li>
