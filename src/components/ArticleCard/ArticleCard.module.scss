@@ -20,6 +20,12 @@
         gap: 4px;
     }
 
+    &__right {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
     &__header {
         display: flex;
         align-items: center;

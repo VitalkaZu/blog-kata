@@ -51,7 +51,13 @@ function ArticleCard({ article, markDown, onClick }) {
         </ul>
         <span>{article.description}</span>
       </div>
-      <User username={article.author.username} createDate={article.createdAt} image={article.author.image} />
+      <div className={s.card__right}>
+        <User username={article.author.username} createDate={article.createdAt} image={article.author.image} />
+        <div>
+          <button type="button">Delete</button>
+          <button type="button">Edit</button>
+        </div>
+      </div>
       {markDown && (
         <div className={s.card__markdown}>
           <Markdown>{markDown}</Markdown>

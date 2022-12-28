@@ -75,6 +75,16 @@ export const blogApi = createApi({
       },
       invalidatesTags: ['Article'],
     }),
+    addArticle: build.mutation({
+      query(body) {
+        console.log(body)
+        return {
+          url: 'articles',
+          method: 'POST',
+          body,
+        }
+      },
+    }),
   }),
 })
 
@@ -86,5 +96,6 @@ export const {
   useUpdateUserMutation,
   useFavoriteArticleMutation,
   useUnFavoriteArticleMutation,
+  useAddArticleMutation,
   useGetProfileQuery,
 } = blogApi

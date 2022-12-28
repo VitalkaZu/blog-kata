@@ -2,10 +2,14 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { useAddArticleMutation } from '../../redux'
 import s from './ArticleForm.module.scss'
 
 function ArticleForm({ title, article }) {
   console.log(article)
+  const navigate = useNavigate()
+  const [addArticle] = useAddArticleMutation()
   const [newTag, setNewTag] = useState()
   const [tags, setTags] = useState(['hello', 'second tag'])
 
@@ -43,9 +47,40 @@ function ArticleForm({ title, article }) {
     formState: { errors },
   } = useForm()
 
-  const onSubmitForm = (data) => {
-    console.log(data)
+  const onSubmitForm = async (data) => {
+    console.log(data, tags)
+    try {
+      const newArticle = await addArticle({
+        article: {
+          ...data,
+          // title: data.title,
+          // description: data.description,
+          // body: data.body,
+          tagList: tags,
+        },
+      }).unwrap()
+      console.log(newArticle)
+      navigate(`articles/${newArticle.article.slug}`)
+    } catch (err) {
+      console.log(err)
+      // setErrors(err.data.errors)
+      // if (!err) {
+      //   console.log(err)
+      //   setErrors(err.data.errors)
+      // }
+    }
   }
+
+  // {
+  //   "article": {
+  //   "title": "string",
+  //     "description": "string",
+  //     "body": "string",
+  //     "tagList": [
+  //     "string"
+  //   ]
+  // }
+  // }
 
   const renderTagsInput = (arrTag) => (
     <>

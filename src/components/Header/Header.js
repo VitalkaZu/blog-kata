@@ -5,6 +5,7 @@ import s from './Header.module.scss'
 import User from '../UI/User/User'
 import { useAuth } from '../../hooks/useAuth'
 import { clearUser } from '../../redux/slices/userSlice'
+import CustomButton from '../UI/CustomButton'
 // import { setImage } from '../../redux/slices/userSlice'
 
 function Header() {
@@ -33,10 +34,14 @@ function Header() {
         <div className={s.header__right}>
           {isAuth ? (
             <>
+              <CustomButton to="/profile">
+                <User username={username} image={image} />
+              </CustomButton>
               <Link to="/profile">
                 <User username={username} image={image} />
               </Link>
               {/* <Link onClick={handlerLogOut}>LogOut</Link> */}
+              <CustomButton onClick={handlerLogOut}>LogOut</CustomButton>
               <button type="button" onClick={handlerLogOut}>
                 LogOut
               </button>
@@ -47,8 +52,8 @@ function Header() {
               <Link to="/sign-in">SignIn</Link>
             </>
           )}
-          {/* // <Button type="text">Sign In</Button> */}
-          {/* // <Button>Sign Up</Button> */}
+          {/* // <CustomButton type="text">Sign In</CustomButton> */}
+          {/* // <CustomButton>Sign Up</CustomButton> */}
         </div>
       </div>
       <Outlet />
