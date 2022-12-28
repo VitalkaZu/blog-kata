@@ -1,16 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Markdown from 'markdown-to-jsx'
+import { message, Popconfirm } from 'antd'
 import Tag from '../UI/Tag'
 import s from './ArticleCard.module.scss'
 import Like from '../Like'
 import User from '../UI/User/User'
+import CustomButton from '../UI/CustomButton'
+import { useAuth } from '../../hooks/useAuth'
 // import { useFavoriteArticleMutation, useUnFavoriteArticleMutation } from '../redux'
-import { useFavoriteArticleMutation, useUnFavoriteArticleMutation } from '../../redux'
+import { useFavoriteArticleMutation, useUnFavoriteArticleMutation, useDeleteArticleMutation } from '../../redux'
 
 function ArticleCard({ article, markDown, onClick }) {
   const [like] = useFavoriteArticleMutation()
   const [dislike] = useUnFavoriteArticleMutation()
+  const [deleteArticle] = useDeleteArticleMutation()
+  const { username } = useAuth()
+  const navigate = useNavigate()
 
   const handleLike = async (slug) => {
     if (article.favorited) {
@@ -19,6 +25,23 @@ function ArticleCard({ article, markDown, onClick }) {
     } else {
       await like(slug)
       console.log('like', slug)
+    }
+  }
+
+  const text = 'Are you sure to delete this article?'
+  const description = 'Delete the article'
+
+  const handleEdit = () => {
+    navigate('edit')
+  }
+
+  const confirm = async () => {
+    try {
+      await deleteArticle(article.slug)
+      message.info('Article has been deleted')
+      navigate('/', { replace: true })
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -53,10 +76,24 @@ function ArticleCard({ article, markDown, onClick }) {
       </div>
       <div className={s.card__right}>
         <User username={article.author.username} createDate={article.createdAt} image={article.author.image} />
-        <div>
-          <button type="button">Delete</button>
-          <button type="button">Edit</button>
-        </div>
+        {username === article.author.username ? (
+          <div className={s.card__btns}>
+            <Popconfirm
+              placement="right"
+              title={text}
+              description={description}
+              onConfirm={confirm}
+              okText="Yes"
+              cancelText="No"
+            >
+              {/* <Button>Right</Button> */}
+              <CustomButton cl="deleteBtn">Delete</CustomButton>
+            </Popconfirm>
+            <CustomButton cl="editBtn" onClick={() => handleEdit()}>
+              Edit
+            </CustomButton>
+          </div>
+        ) : null}
       </div>
       {markDown && (
         <div className={s.card__markdown}>
@@ -66,25 +103,4 @@ function ArticleCard({ article, markDown, onClick }) {
     </li>
   )
 }
-
-// {
-//   "slug": "string",
-//   "title": "string",
-//   "description": "string",
-//   "body": "string",
-//   "tagList": [
-//   "string"
-// ],
-//   "createdAt": "2022-12-19T14:09:47.208Z",
-//   "updatedAt": "2022-12-19T14:09:47.208Z",
-//   "favorited": true,
-//   "favoritesCount": 0,
-//   "author": {
-//   "username": "string",
-//     "bio": "string",
-//     "image": "string",
-//     "following": true
-// }
-// }
-
 export default ArticleCard

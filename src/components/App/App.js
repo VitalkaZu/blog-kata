@@ -10,6 +10,7 @@ import SignUp from '../../Pages/SignUp'
 import SignIn from '../../Pages/SignIn'
 import ArticlePage from '../../Pages/ArticlePage'
 import UserProfile from '../../Pages/UserProfile'
+import EditArticle from '../../Pages/EditArticle'
 import { WithAuth } from '../../HOC/WithAuth'
 import NewPost from '../../Pages/NewPost'
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/articles/:slug/edit" element={<EditArticle />} />
         <Route
           path="/newarticle"
           element={(

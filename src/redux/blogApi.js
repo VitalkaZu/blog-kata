@@ -84,6 +84,28 @@ export const blogApi = createApi({
           body,
         }
       },
+      invalidatesTags: ['Article']
+    }),
+    deleteArticle: build.mutation({
+      query(slug) {
+        // console.log(body)
+        return {
+          url: `articles/${slug}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: ['Article']
+    }),
+    updateArticle: build.mutation({
+      query(slug, body) {
+        // console.log(body)
+        return {
+          url: `articles/${slug}`,
+          method: 'PUT',
+          body,
+        }
+      },
+      invalidatesTags: ['Article']
     }),
   }),
 })
@@ -97,5 +119,6 @@ export const {
   useFavoriteArticleMutation,
   useUnFavoriteArticleMutation,
   useAddArticleMutation,
+  useDeleteArticleMutation,
   useGetProfileQuery,
 } = blogApi

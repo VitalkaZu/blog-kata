@@ -60,7 +60,7 @@ function ArticleForm({ title, article }) {
         },
       }).unwrap()
       console.log(newArticle)
-      navigate(`articles/${newArticle.article.slug}`)
+      navigate(`/articles/${newArticle.article.slug}`)
     } catch (err) {
       console.log(err)
       // setErrors(err.data.errors)

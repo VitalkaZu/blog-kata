@@ -1,0 +1,20 @@
+@import "src/accets/variables";
+%btnWithBorder {
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    padding: 6px 18px;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.editBtn {
+    @extend %btnWithBorder;
+    color: $success-color;
+    border-color: $success-color;
+}
+
+.deleteBtn {
+    @extend %btnWithBorder;
+    color: $error-color;
+    border-color: $error-color;
+}
