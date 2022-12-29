@@ -12,7 +12,6 @@ function Header() {
   // const { username, image } = useSelector((state) => state.userReducer.user)
   const dispatch = useDispatch()
   const { isAuth, username, image } = useAuth()
-  console.log(image)
   // const [data] = useGetProfileQuery(username)
   // const { isAuth, username } = useAuth()
 
@@ -34,9 +33,9 @@ function Header() {
         <div className={s.header__right}>
           {isAuth ? (
             <>
-              <CustomButton to="/profile">
-                <User username={username} image={image} />
-              </CustomButton>
+              {/* <CustomButton to="/profile"> */}
+              {/*  <User username={username} image={image} /> */}
+              {/* </CustomButton> */}
               <Link to="/profile">
                 <User username={username} image={image} />
               </Link>

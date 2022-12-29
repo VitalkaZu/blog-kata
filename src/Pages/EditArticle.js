@@ -5,14 +5,16 @@ import { useUpdateArticleMutation, useGetArticleQuery } from '../redux'
 
 function EditArticle() {
   const { slug } = useParams()
-  const { data = {}, isLoading, isError } = useGetArticleQuery(useParams().slug)
+  console.log('slug   >>>>  ', slug)
+  const { data = {}, isLoading, isError } = useGetArticleQuery(slug)
   const navigate = useNavigate()
   const [updateArticle, { isLoading: isUpdateArticle }] = useUpdateArticleMutation()
   // const  useParams('slig')
 
   const handleUpdateArticle = async (updArticle) => {
     try {
-      const newArticle = await updateArticle(
+      console.log(slug)
+      await updateArticle(
         {
           article: {
             ...updArticle,
@@ -20,7 +22,7 @@ function EditArticle() {
         },
         slug
       ).unwrap()
-      navigate(`/articles/${newArticle.article.slug}`)
+      navigate(`/articles/${slug}`)
     } catch (err) {
       console.log(err)
     }

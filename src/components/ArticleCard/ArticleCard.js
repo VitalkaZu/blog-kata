@@ -21,10 +21,10 @@ function ArticleCard({ article, markDown, onClick }) {
   const handleLike = async (slug) => {
     if (article.favorited) {
       await dislike(slug)
-      console.log('dislike', slug)
+      // console.log('dislike', slug)
     } else {
       await like(slug)
-      console.log('like', slug)
+      // console.log('like', slug)
     }
   }
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import s from './User.module.scss'
 
 function User({ username, image, createDate }) {
-  console.log(image)
+  // console.log(image)
   const date = new Date(createDate)
   return (
     <div className={s.user}>

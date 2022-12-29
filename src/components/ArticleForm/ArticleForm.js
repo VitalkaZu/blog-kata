@@ -11,13 +11,13 @@ function ArticleForm({ title, article, onSubmit }) {
 
   const addTag = (tag) => {
     setTags([...tags, tag])
-    console.log('add tag >>>', tag)
+    // console.log('add tag >>>', tag)
   }
 
   const deleteTag = (tag) => {
     const remainingTags = tags.filter((t) => t !== tag)
     setTags([...remainingTags])
-    console.log('delete tag >>>', tag)
+    // console.log('delete tag >>>', tag)
   }
 
   const handleAddTag = () => {

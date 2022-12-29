@@ -3,10 +3,13 @@ import { useParams } from 'react-router-dom'
 import { useGetArticleQuery } from '../redux'
 import ArticleCard from '../components/ArticleCard'
 
-function ArticlePage({ slug }) {
-  console.log(useParams())
-  const { data, isLoading } = useGetArticleQuery(useParams().slug)
-  console.log(data)
+function ArticlePage() {
+  // console.log(useParams())
+  const { slug } = useParams()
+  // console.log(slug)
+  // console.log(useParams().slug)
+  const { data, isLoading } = useGetArticleQuery(slug)
+  // console.log(data)
   if (isLoading) {
     return <h1>СТАТЬЯ ЗАГРУЖАЕТСЯ</h1>
   }

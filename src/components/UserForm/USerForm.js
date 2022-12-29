@@ -8,7 +8,7 @@ import s from './SignUp.module.scss'
 
 function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
   const { title, fields, submitLabel, footer } = template
-  console.log(valuesProps)
+  // console.log(valuesProps)
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
   })
 
   const onSubmitForm = (data) => {
-    console.log(data)
+    // console.log(data)
     onSubmit(data)
     // reset()
   }
