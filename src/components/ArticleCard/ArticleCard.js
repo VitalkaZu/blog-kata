@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Markdown from 'markdown-to-jsx'
 import { message, Popconfirm } from 'antd'
 import Tag from '../UI/Tag'
@@ -12,6 +12,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { useFavoriteArticleMutation, useUnFavoriteArticleMutation, useDeleteArticleMutation } from '../../redux'
 
 function ArticleCard({ article, markDown, onClick }) {
+  const { slug: currentSlug } = useParams()
   const [like] = useFavoriteArticleMutation()
   const [dislike] = useUnFavoriteArticleMutation()
   const [deleteArticle] = useDeleteArticleMutation()
@@ -76,7 +77,7 @@ function ArticleCard({ article, markDown, onClick }) {
       </div>
       <div className={s.card__right}>
         <User username={article.author.username} createDate={article.createdAt} image={article.author.image} />
-        {username === article.author.username ? (
+        {(username === article.author.username && currentSlug) ? (
           <div className={s.card__btns}>
             <Popconfirm
               placement="right"

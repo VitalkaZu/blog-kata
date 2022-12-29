@@ -84,7 +84,7 @@ export const blogApi = createApi({
           body,
         }
       },
-      invalidatesTags: ['Article']
+      invalidatesTags: ['Article'],
     }),
     deleteArticle: build.mutation({
       query(slug) {
@@ -94,18 +94,18 @@ export const blogApi = createApi({
           method: 'DELETE',
         }
       },
-      invalidatesTags: ['Article']
+      invalidatesTags: ['Article'],
     }),
     updateArticle: build.mutation({
-      query(body, sl) {
+      query({ article, slug }) {
         // console.log(body)
         return {
-          url: `articles/${sl}`,
+          url: `articles/${slug}`,
           method: 'PUT',
-          body,
+          body: { article },
         }
       },
-      invalidatesTags: ['Article']
+      invalidatesTags: ['Article'],
     }),
   }),
 })
