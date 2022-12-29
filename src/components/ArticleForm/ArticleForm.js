@@ -1,17 +1,13 @@
 /* eslint-disable indent,react/jsx-indent */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { useAddArticleMutation } from '../../redux'
+// import { useNavigate } from 'react-router-dom'
 import s from './ArticleForm.module.scss'
 
-function ArticleForm({ title, article }) {
-  console.log(article)
-  const navigate = useNavigate()
-  const [addArticle] = useAddArticleMutation()
+function ArticleForm({ title, article, onSubmit }) {
   const [newTag, setNewTag] = useState()
-  const [tags, setTags] = useState(['hello', 'second tag'])
+  const [tags = [], setTags] = useState()
 
   const addTag = (tag) => {
     setTags([...tags, tag])
@@ -40,6 +36,7 @@ function ArticleForm({ title, article }) {
   const {
     register,
     handleSubmit,
+    setValue,
     // watch,
     // setError,
     // getValues,
@@ -47,57 +44,59 @@ function ArticleForm({ title, article }) {
     formState: { errors },
   } = useForm()
 
-  const onSubmitForm = async (data) => {
-    console.log(data, tags)
-    try {
-      const newArticle = await addArticle({
-        article: {
-          ...data,
-          // title: data.title,
-          // description: data.description,
-          // body: data.body,
-          tagList: tags,
-        },
-      }).unwrap()
-      console.log(newArticle)
-      navigate(`/articles/${newArticle.article.slug}`)
-    } catch (err) {
-      console.log(err)
-      // setErrors(err.data.errors)
-      // if (!err) {
-      //   console.log(err)
-      //   setErrors(err.data.errors)
-      // }
+  useEffect(() => {
+    if (article) {
+      const { tagList = [], title: titleArticle, description, body } = article
+      setValue('title', titleArticle)
+      setValue('description', description)
+      setValue('body', body)
+      setTags(tagList)
     }
-  }
+  }, [article])
 
-  // {
-  //   "article": {
-  //   "title": "string",
-  //     "description": "string",
-  //     "body": "string",
-  //     "tagList": [
-  //     "string"
-  //   ]
-  // }
-  // }
+  const onSubmitForm = (data) => {
+    onSubmit(data, tags)
+    // try {
+    //   const newArticle = await addArticle({
+    //     article: {
+    //       ...data,
+    //       // title: data.title,
+    //       // description: data.description,
+    //       // body: data.body,
+    //       tagList: tags,
+    //     },
+    //   }).unwrap()
+    //   console.log(newArticle)
+    //   navigate(`/articles/${newArticle.article.slug}`)
+    // } catch (err) {
+    //   console.log(err)
+    //   // setErrors(err.data.errors)
+    //   // if (!err) {
+    //   //   console.log(err)
+    //   //   setErrors(err.data.errors)
+    //   // }
+    // }
+  }
 
   const renderTagsInput = (arrTag) => (
     <>
-      {arrTag.map((tag) => (
-        <li className={s.itemTags}>
-          <input
-            placeholder="Tag"
-            value={tag}
-            disabled
-            className={classNames(s.card__input, { [s.error]: errors.body })}
-            // onChange={(e) => updateTag(tag, e.target.value)}
-          />
-          <button className={s.deleteBtn} type="button" onClick={() => deleteTag(tag)}>
-            Delete
-          </button>
-        </li>
-      ))}
+      {arrTag
+        ? arrTag.map((tag) => (
+            <li className={s.itemTags}>
+              <input
+                placeholder="Tag"
+                value={tag}
+                disabled
+                className={classNames(s.card__input, { [s.error]: errors.body })}
+                // onChange={(e) => updateTag(tag, e.target.value)}
+              />
+              <button className={s.deleteBtn} type="button" onClick={() => deleteTag(tag)}>
+                Delete
+              </button>
+            </li>
+          ))
+        : null}
+
       <li className={s.itemTags}>
         <input
           placeholder="Tag"
