@@ -23,16 +23,12 @@ function App() {
         <Route path="/articles/:slug" element={<ArticlePage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/articles/:slug/edit" element={<EditArticle />} />
-        <Route
-          path="/newarticle"
-          element={(
-            <WithAuth>
-              <NewPost />
-            </WithAuth>
-          )}
-        />
+        {/* protected routes */}
+        <Route element={<WithAuth />}>
+          <Route path="/newarticle" element={<NewPost />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/articles/:slug/edit" element={<EditArticle />} />
+        </Route>
       </Route>
     </Routes>
   )
