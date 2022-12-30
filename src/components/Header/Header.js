@@ -5,7 +5,7 @@ import s from './Header.module.scss'
 import User from '../UI/User/User'
 import { useAuth } from '../../hooks/useAuth'
 import { clearUser } from '../../redux/slices/userSlice'
-import CustomButton from '../UI/CustomButton'
+// import CustomButton from '../UI/CustomButton'
 // import { setImage } from '../../redux/slices/userSlice'
 
 function Header() {
@@ -40,15 +40,16 @@ function Header() {
                 <User username={username} image={image} />
               </Link>
               {/* <Link onClick={handlerLogOut}>LogOut</Link> */}
-              <CustomButton onClick={handlerLogOut}>LogOut</CustomButton>
               <button type="button" onClick={handlerLogOut}>
                 LogOut
               </button>
             </>
           ) : (
             <>
-              <Link to="/sign-up">SignUp</Link>
               <Link to="/sign-in">SignIn</Link>
+              <Link to="/sign-up" className="signUpBtn">
+                SignUp
+              </Link>
             </>
           )}
           {/* // <CustomButton type="text">Sign In</CustomButton> */}

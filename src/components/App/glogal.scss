@@ -9,3 +9,33 @@ body {
   margin: 0 auto;
   width: $wrapper_width;
 }
+
+%btnWithBorder {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
+  padding: 6px 18px;
+  font-size: 14px;
+  line-height: 22px;
+  text-decoration: none;
+}
+
+.editBtn {
+  @extend %btnWithBorder;
+  color: $success-color;
+  border-color: $success-color;
+}
+
+.deleteBtn {
+  @extend %btnWithBorder;
+  color: $error-color;
+  border-color: $error-color;
+}
+
+.signUpBtn {
+  @extend %btnWithBorder;
+  color: $success-color;
+  border-color: $success-color;
+  font-size: 18px;
+  line-height: 28px;
+}
+
