@@ -144,7 +144,7 @@ function SignUp() {
   const template = {
     title: 'Create new account',
     fields: [usernameField, emailField, passwordField, confirmPasswordField, argeeCheckBoxField],
-    submitLabel: 'Login',
+    submitLabel: 'Create',
     footer: (
       <>
         Already have an account? <Link to="/sign-in">Sign In</Link>.

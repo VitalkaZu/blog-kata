@@ -22,11 +22,13 @@
     font-size: 18px;
     line-height: 28px;
     color: $heading_color;
+    text-decoration: none;
   }
 
   &__date {
     font-size: 12px;
     line-height: 22px;
+    white-space: nowrap;
     color: $text-color-secondary;
   }
 }

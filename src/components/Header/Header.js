@@ -27,7 +27,7 @@ function Header() {
   return (
     <>
       <div className={s.header}>
-        <Link to="/" className={s.header__title}>
+        <Link to="/" className="logoLink">
           Realworld Blog
         </Link>
         <div className={s.header__right}>
@@ -36,17 +36,18 @@ function Header() {
               {/* <CustomButton to="/profile"> */}
               {/*  <User username={username} image={image} /> */}
               {/* </CustomButton> */}
-              <Link to="/profile">
+              <Link to="/new-article" className="newArticleBtn">Create article</Link>
+              <Link to="/profile" className="userBtn">
                 <User username={username} image={image} />
               </Link>
               {/* <Link onClick={handlerLogOut}>LogOut</Link> */}
-              <button type="button" onClick={handlerLogOut}>
+              <button type="button" className="logoutBtn" onClick={handlerLogOut}>
                 LogOut
               </button>
             </>
           ) : (
             <>
-              <Link to="/sign-in">SignIn</Link>
+              <Link to="/sign-in" className="signInBtn">SignIn</Link>
               <Link to="/sign-up" className="signUpBtn">
                 SignUp
               </Link>
@@ -56,7 +57,9 @@ function Header() {
           {/* // <CustomButton>Sign Up</CustomButton> */}
         </div>
       </div>
-      <Outlet />
+      <div className={s.main}>
+        <Outlet />
+      </div>
     </>
   )
 }

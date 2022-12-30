@@ -15,7 +15,6 @@ function ArticlePage() {
   }
   return (
     <div>
-      <h1>ArticlePage {slug}</h1>
       <ArticleCard article={data.article} markDown={data.article.body} />
     </div>
   )

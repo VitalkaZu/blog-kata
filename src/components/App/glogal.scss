@@ -11,31 +11,68 @@ body {
 }
 
 %btnWithBorder {
-  border: 1px solid rgba(0, 0, 0, 0.75);
+  border: 1px solid $color_text_1;
   border-radius: 5px;
   padding: 6px 18px;
+}
+
+%btn {
   font-size: 14px;
   line-height: 22px;
   text-decoration: none;
+  color: $color_text_1;
+
+  &:hover {
+    opacity: 60%;
+  }
+
+  //&:visited {
+  //  color: inherit;
+  //}
 }
 
-.editBtn {
+%btnSmallText {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+%btnLargeText {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.signInBtn, .logoLink, .userBtn {
+  @extend %btn;
+  @extend %btnLargeText
+}
+
+.editBtn, .newArticleBtn {
   @extend %btnWithBorder;
+  @extend %btn;
   color: $success-color;
   border-color: $success-color;
 }
 
 .deleteBtn {
+  @extend %btn;
   @extend %btnWithBorder;
   color: $error-color;
   border-color: $error-color;
 }
 
 .signUpBtn {
+  @extend %btn;
+  @extend %btnLargeText;
   @extend %btnWithBorder;
   color: $success-color;
   border-color: $success-color;
-  font-size: 18px;
-  line-height: 28px;
+
+}
+
+.logoutBtn {
+  @extend %btn;
+  @extend %btnLargeText;
+  @extend %btnWithBorder;
+  color: $color_text_1;
 }
 

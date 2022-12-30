@@ -5,12 +5,17 @@
   background: white;
   padding: 16px 22px;
 
-  &__title {
-  }
-
   &__right {
     display: flex;
-    gap: 10px;
+    gap: 26px;
     align-items: center;
   }
+}
+
+.main {
+  margin: 34px auto;
+}
+
+.userLink {
+  text-decoration: none;
 }
