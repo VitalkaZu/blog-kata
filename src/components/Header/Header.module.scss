@@ -4,6 +4,7 @@
   align-items: center;
   background: white;
   padding: 16px 22px;
+  height: 80px;
 
   &__right {
     display: flex;
@@ -13,7 +14,13 @@
 }
 
 .main {
-  margin: 34px auto;
+  //margin: 34px auto;
+  //min-height: calc(100vh - 80px);
+  padding: 34px 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: calc(100vh - 80px);
 }
 
 .userLink {

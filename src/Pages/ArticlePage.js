@@ -14,9 +14,7 @@ function ArticlePage() {
     return <h1>СТАТЬЯ ЗАГРУЖАЕТСЯ</h1>
   }
   return (
-    <div>
-      <ArticleCard article={data.article} markDown={data.article.body} />
-    </div>
+    <ArticleCard article={data.article} markDown={data.article.body} />
   )
 }
 

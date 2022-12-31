@@ -41,7 +41,7 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
     }
   }, [valuesProps])
 
-  const renderFields = (arrFields) => arrFields.map((field) => {
+  const renderFields = (arrFields) => arrFields.map((field, index) => {
       const { label, name, type, placeholder, validationProps, matchField } = field
 
       switch (type) {
@@ -50,9 +50,10 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
         case 'password':
         case 'url':
           return (
-            <label className={s.card__label}>
+            <label key={index} className={s.card__label}>
               {label}
               <input
+                // key={name}
                 type={type}
                 placeholder={placeholder}
                 className={classNames(s.card__input, { [s.error]: errors[name] })}
@@ -72,7 +73,7 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
         case 'checkbox':
           return (
             <>
-              <label className={s.card__checkbox}>
+              <label key={index} className={s.card__checkbox}>
                 <input
                   type="checkbox"
                   className={classNames(s.card__input, { [s.error]: errors[name] })}
@@ -86,7 +87,7 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
           )
         default:
           return (
-            <div>
+            <div key={index}>
               <span>Invalid field</span>
             </div>
           )

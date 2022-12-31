@@ -11,12 +11,13 @@ function ArticlesList() {
   if (isLoading) {
     return <h1>Загрузка информации</h1>
   }
-  const arrArticles = data.articles
-  const total = data.articlesCount
+  // const arrArticles = data.articles
+  // const total = data.articlesCount
+  const { articles: arrArticles, articlesCount: total } = data
   console.log(data.articles)
   return (
-    <>
-      <ul className={`${s.list} wrapper`}>
+    <div className={`${s.list} wrapper`}>
+      <ul className={s.list__items}>
         {arrArticles.map((article) => (
           <ArticleCard key={article.slug} article={article} />
         ))}
@@ -28,7 +29,7 @@ function ArticlesList() {
         total={total}
         onChange={(e) => setPage(e)}
       />
-    </>
+    </div>
   )
 }
 

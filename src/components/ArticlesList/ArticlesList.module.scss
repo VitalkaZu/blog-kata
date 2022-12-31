@@ -3,6 +3,12 @@
     flex-direction: column;
     gap: 26px;
 
+    &__items {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+    }
+
     &__pagination {
         text-align: center;
     }
