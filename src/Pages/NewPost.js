@@ -7,12 +7,12 @@ function NewPost() {
   const navigate = useNavigate()
   const [addArticle] = useAddArticleMutation()
 
-  const handleAddArticle = async (data, tags) => {
+  const handleAddArticle = async (data) => {
     try {
       const newArticle = await addArticle({
         article: {
           ...data,
-          tagList: tags,
+          // tagList: tags,
         },
       }).unwrap()
       console.log(newArticle)

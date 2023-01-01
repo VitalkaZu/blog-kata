@@ -9,12 +9,12 @@ function EditArticle() {
   const { data = {}, isLoading, isError } = useGetArticleQuery(slug)
   const navigate = useNavigate()
   const [updateArticle, { isLoading: isUpdateArticle }] = useUpdateArticleMutation()
-  const handleUpdateArticle = async (updArticle, tags) => {
+  const handleUpdateArticle = async (updArticle) => {
     try {
       await updateArticle({
         article: {
           ...updArticle,
-          tagList: tags,
+          // tagList: tags,
         },
         slug,
       }).unwrap()

@@ -1,13 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Pagination } from 'antd'
+import { useSearchParams } from 'react-router-dom'
 import ArticleCard from '../ArticleCard'
 import s from './ArticlesList.module.scss'
 import { useGetArticlesQuery } from '../../redux'
 
 function ArticlesList() {
-  const pageSize = 5
-  const [page, setPage] = useState(1)
-  const { data = [], isLoading } = useGetArticlesQuery(page * pageSize - pageSize)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const limit = searchParams.get('limit') || 5
+  const offset = searchParams.get('offset') || 0
+  console.log(limit, offset)
+  // const [page] = useState(1)
+  const { data = [], isLoading } = useGetArticlesQuery({
+    limit,
+    offset,
+  })
+
+  const handlePaginationPage = (currentPage, pageSizeSelect) => {
+    setSearchParams({ limit: pageSizeSelect, offset: currentPage * pageSizeSelect - pageSizeSelect })
+  }
+
   if (isLoading) {
     return <h1>Загрузка информации</h1>
   }
@@ -24,10 +36,10 @@ function ArticlesList() {
       </ul>
       <Pagination
         className={`${s.list__pagination} wrapper`}
-        defaultCurrent={page}
-        pageSize={pageSize}
+        defaultCurrent={offset / limit + 1}
+        pageSize={limit}
         total={total}
-        onChange={(e) => setPage(e)}
+        onChange={handlePaginationPage}
       />
     </div>
   )
