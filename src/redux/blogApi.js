@@ -7,11 +7,6 @@ export const blogApi = createApi({
     baseUrl: 'https://blog.kata.academy/api/',
     prepareHeaders: (headers, { getState }) => {
       const state = getState()
-      // const {
-      //   userSlice: { user }
-      // } = getState()
-      // console.log('token  >>>  ', state.userSlice?.user?.token)
-      // const token = user.token
       if (state.userSlice.user.token) {
         headers.set('Authorization', `Bearer ${state.userSlice.user.token}`)
       }

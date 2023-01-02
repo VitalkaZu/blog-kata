@@ -37,6 +37,11 @@
     }
   }
 
+  &__textarea {
+    resize: vertical;
+    min-height: 168px;
+  }
+
   &__submit {
     background: $info_color;
     color: white;

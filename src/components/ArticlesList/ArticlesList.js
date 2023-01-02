@@ -2,6 +2,7 @@ import React from 'react'
 import { Pagination } from 'antd'
 import { useSearchParams } from 'react-router-dom'
 import ArticleCard from '../ArticleCard'
+import LoadIndicator from '../UI/LoadIndicator'
 import s from './ArticlesList.module.scss'
 import { useGetArticlesQuery } from '../../redux'
 
@@ -11,7 +12,7 @@ function ArticlesList() {
   const offset = searchParams.get('offset') || 0
   console.log(limit, offset)
   // const [page] = useState(1)
-  const { data = [], isLoading } = useGetArticlesQuery({
+  const { data = [], isFetching } = useGetArticlesQuery({
     limit,
     offset,
   })
@@ -20,13 +21,11 @@ function ArticlesList() {
     setSearchParams({ limit: pageSizeSelect, offset: currentPage * pageSizeSelect - pageSizeSelect })
   }
 
-  if (isLoading) {
-    return <h1>Загрузка информации</h1>
+  if (isFetching) {
+    return <LoadIndicator tip="Load article list" />
   }
-  // const arrArticles = data.articles
-  // const total = data.articlesCount
+
   const { articles: arrArticles, articlesCount: total } = data
-  console.log(data.articles)
   return (
     <div className={`${s.list} wrapper`}>
       <ul className={s.list__items}>

@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Markdown from 'markdown-to-jsx'
 import { message, Popconfirm } from 'antd'
-import Tag from '../UI/Tag'
 import s from './ArticleCard.module.scss'
+import TagList from '../TagList/TagList'
 import Like from '../Like'
 import User from '../UI/User/User'
 // import CustomButton from '../UI/CustomButton'
@@ -57,16 +57,7 @@ function ArticleCard({ article, markDown }) {
               handleLike={() => handleLike(article.slug)}
             />
           </div>
-          <ul>
-            {article.tagList &&
-              article.tagList.map((tag, index) => {
-                const tagTrim = tag.trim()
-                if (tagTrim.length > 0 && tagTrim.length < 30) {
-                  return <Tag key={index} label={tagTrim} />
-                }
-                return false
-              })}
-          </ul>
+          <TagList arrTags={article.tagList} />
           <span>{article.description}</span>
         </div>
         <div className={s.card__right}>
@@ -86,15 +77,9 @@ function ArticleCard({ article, markDown }) {
                   Delete
                 </button>
               </Popconfirm>
-              {/* <button className="editBtn" type="button" onClick={() => handleEdit()}> */}
-              {/*   Edit */}
-              {/* </button> */}
               <Link to="edit" className="editBtn">
                 Edit
               </Link>
-              {/* <CustomButton cl="editBtn" onClick={() => handleEdit()}> */}
-              {/*   Edit */}
-              {/* </CustomButton> */}
             </div>
           ) : null}
         </div>
