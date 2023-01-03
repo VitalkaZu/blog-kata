@@ -7,8 +7,8 @@ export const blogApi = createApi({
     baseUrl: 'https://blog.kata.academy/api/',
     prepareHeaders: (headers, { getState }) => {
       const state = getState()
-      if (state.userSlice.user.token) {
-        headers.set('Authorization', `Bearer ${state.userSlice.user.token}`)
+      if (state.userSlice.user.token || localStorage.getItem('token')) {
+        headers.set('Authorization', `Bearer ${state.userSlice.user.token || localStorage.getItem('token')}`)
       }
       return headers
     },
@@ -50,7 +50,7 @@ export const blogApi = createApi({
       },
     }),
     getProfile: build.query({
-      query: (username) => `profiles/${username}`,
+      query: () => 'user',
     }),
     favoriteArticle: build.mutation({
       query(slug) {

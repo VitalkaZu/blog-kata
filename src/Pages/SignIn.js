@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { useForm } from 'react-hook-form'
 // import { useDispatch } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 // import { message } from 'antd'
 // import { setUser } from '../redux/slices/userSlice'
 // import s from './SignUp.module.scss'
@@ -11,43 +11,38 @@ import UserForm from '../components/UserForm'
 // import ErrorIndicator from '../components/UI/ErrorIndicator'
 
 function SignIn() {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const location = useLocation()
-  // const [errors, setErrors] = useState()
+  const [errors, setErrors] = useState()
   const fromPage = location.state?.from?.pathname || '/'
-  console.log('location', location)
-  console.log('from >> ', fromPage)
+  // console.log('location', location)
+  // console.log('from >> ', fromPage)
   // const dispatch = useDispatch()
   // const [messageApi, contextHolder] = message.useMessage()
 
   const [registerUser] = useLoginUserMutation()
 
-  const onSubmit = (data) => {
-    console.log(data)
-    registerUser({
-      user: {
-        email: data.email,
-        password: data.password,
-      },
-    })
-      // .unwrap()
-      .then((res) => {
-        console.log('result >>>> ', res)
-        // dispatch(setUser(res.data))
-        // navigate(fromPage, { replace: true })
-      })
-      .catch((e) => {
-        console.log('error >>>>', e)
-      })
-      // .catch((e) => {
-      //   console.log(e)
-      //   if (e.status === 422) {
-      //     setErrors({
-      //       email: 'email or password is invalid',
-      //       password: 'email or password is invalid',
-      //     })
-      //   }
-      // })
+  const onSubmit = async (data) => {
+    try {
+      // const userData =
+      await registerUser({
+        user: {
+          email: data.email,
+          password: data.password,
+        },
+      }).unwrap()
+      // dispatch(setUser(userData))
+      navigate(fromPage, { replace: true })
+    } catch (err) {
+      if (!err?.status) {
+        console.log('Server not response')
+      } else if (err.status === 422) {
+        setErrors({
+          email: 'email or password is invalid',
+          password: 'email or password is invalid',
+        })
+      }
+    }
   }
 
   const template = {
@@ -61,19 +56,10 @@ function SignIn() {
     ),
   }
 
-  // if (error) {
-  //   console.log(error)
-  //   messageApi.open({
-  //     type: 'error',
-  //     content: JSON.stringify(error.data),
-  //   })
-  //   // return <ErrorIndicator error={JSON.stringify(error.data)} />
-  // }
-
   return (
     <>
       {/* {contextHolder} */}
-      <UserForm template={template} onSubmit={(data) => onSubmit(data)} />
+      <UserForm template={template} onSubmit={(data) => onSubmit(data)} errorsProps={errors} />
     </>
   )
 }

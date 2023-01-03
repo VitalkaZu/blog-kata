@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import UserForm from '../components/UserForm'
+import { useAuth } from '../hooks/useAuth'
 import { usernameField, passwordField, imageField, emailField } from '../components/UserForm/templatesField'
 import { useUpdateUserMutation } from '../redux'
-import { setUser } from '../redux/slices/userSlice'
+// import { setUser } from '../redux/slices/userSlice'
 
 function UserProfile() {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const navigate = useNavigate()
   const [errors, setErrors] = useState()
   const [updateUser] = useUpdateUserMutation()
@@ -15,23 +16,20 @@ function UserProfile() {
     console.log(data)
 
     try {
-      const userData = await updateUser({
+      // const userData =
+      await updateUser({
         user: {
           username: data.username,
           email: data.email,
           image: data.image,
         },
       }).unwrap()
-      console.log(userData)
-      dispatch(setUser(userData))
+      // console.log(userData)
+      // dispatch(setUser(userData))
       navigate('/')
     } catch (err) {
       console.log(err)
       setErrors(err.data.errors)
-      // if (!err) {
-      //   console.log(err)
-      //   setErrors(err.data.errors)
-      // }
     }
     // updateUser({
     //   user: {
@@ -50,7 +48,8 @@ function UserProfile() {
     //     console.log(e)
     //   })
   }
-  const { username, email, image } = useSelector((state) => state.userSlice.user)
+  // const { username, email, image } = useSelector((state) => state.userSlice.user)
+  const { username, email, image } = useAuth()
   const valuesProps = {
     username,
     email,
