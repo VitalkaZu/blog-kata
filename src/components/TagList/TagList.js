@@ -4,11 +4,13 @@ import Tag from '../UI/Tag'
 function TagList({ arrTags }) {
   return (
     <ul>
-      {arrTags &&
+      {arrTags.length &&
         arrTags.map((tag, index) => {
-          const tagTrim = tag.trim()
-          if (tagTrim.length > 0 && tagTrim.length < 30) {
-            return <Tag key={index} label={tagTrim} />
+          if (tag) {
+            const tagTrim = tag.trim()
+            if (tagTrim.length > 0 && tagTrim.length < 30) {
+              return <Tag key={index} label={tagTrim} />
+            }
           }
           return false
         })}

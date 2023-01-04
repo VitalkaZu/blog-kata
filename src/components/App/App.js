@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import { useGetArticlesQuery } from '../../redux'
 import { Route, Routes } from 'react-router-dom'
 // import { useDispatch } from 'react-redux'
-// import { useAuth } from '../../hooks/useAuth'
-import { useGetProfileQuery } from '../../redux/blogApi'
+import { useAuth } from '../../hooks/useAuth'
+import { useLazyGetProfileQuery } from '../../redux/blogApi'
 import ArticlesList from '../ArticlesList'
 import './reset.scss'
 import './glogal.scss'
@@ -19,11 +19,19 @@ import NewPost from '../../Pages/NewPost'
 // import { setToken, setUser } from '../../redux/slices/userSlice'
 
 function App() {
-  useGetProfileQuery()
+  const [trigger] = useLazyGetProfileQuery()
+  const { isAuth } = useAuth()
+
+  // useGetProfileQuery({ skip: !localStorage.getItem('token') })
   // const dispatch = useDispatch()
   // const { getProfile } = useGetProfileQuery()
   // const { username, token } = useAuth()
 
+  useEffect(() => {
+    if (localStorage.getItem('token') && !isAuth) {
+      trigger()
+    }
+  }, [isAuth])
   // useEffect(() => {
   //   if (!username && localStorage.getItem('token')) {
   //     const fetchData = async () => {

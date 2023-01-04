@@ -114,7 +114,7 @@ function ArticleForm({ title, article, onSubmit }) {
               className={s.addBtn}
               type="button"
               onClick={async () => {
-                await append({ tag: getValues('lastTag') })
+                await append(getValues('lastTag'))
                 setValue('lastTag', '')
                 setFocus('lastTag')
               }}

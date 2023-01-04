@@ -16,11 +16,17 @@ export const blogApi = createApi({
   endpoints: (build) => ({
     getArticles: build.query({
       query: ({ limit, offset }) => `articles?limit=${limit}&offset=${offset}`,
-      providesTags: ['Article'],
+      // providesTags: ['Article'],
+      // eslint-disable-next-line arrow-body-style
+      providesTags: (result) => {
+        return result ? [...result.articles.map(({ slug }) => ({ type: 'Article', id: slug })), 'Article'] : ['Article']
+      },
     }),
     getArticle: build.query({
       query: (slug) => `articles/${slug}`,
-      providesTags: ['Article'],
+      // eslint-disable-next-line arrow-body-style
+
+      providesTags: (result, error, arg) => [{ type: 'Article', id: arg }],
     }),
     registerUser: build.mutation({
       query(body) {
@@ -59,7 +65,9 @@ export const blogApi = createApi({
           method: 'POST',
         }
       },
-      invalidatesTags: ['Article'],
+      // invalidatesTags: [{ type: 'Article', id: 1 }],
+      // invalidatesTags: ['Article'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Article', id: arg }],
     }),
     unFavoriteArticle: build.mutation({
       query(slug) {
@@ -68,7 +76,8 @@ export const blogApi = createApi({
           method: 'DELETE',
         }
       },
-      invalidatesTags: ['Article'],
+      // invalidatesTags: ['Article'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Article', id: arg }],
     }),
     addArticle: build.mutation({
       query(body) {
@@ -117,4 +126,5 @@ export const {
   useDeleteArticleMutation,
   useUpdateArticleMutation,
   useGetProfileQuery,
+  useLazyGetProfileQuery,
 } = blogApi

@@ -11,8 +11,7 @@ function ArticlesList() {
   const limit = searchParams.get('limit') || 5
   const offset = searchParams.get('offset') || 0
   console.log(limit, offset)
-  // const [page] = useState(1)
-  const { data = [], isFetching } = useGetArticlesQuery({
+  const { data = [], isLoading } = useGetArticlesQuery({
     limit,
     offset,
   })
@@ -21,7 +20,7 @@ function ArticlesList() {
     setSearchParams({ limit: pageSizeSelect, offset: currentPage * pageSizeSelect - pageSizeSelect })
   }
 
-  if (isFetching) {
+  if (isLoading) {
     return <LoadIndicator tip="Load article list" />
   }
 
