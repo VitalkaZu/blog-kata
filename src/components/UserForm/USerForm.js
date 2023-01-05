@@ -1,31 +1,24 @@
 /* eslint-disable indent */
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-// import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 import s from './SignUp.module.scss'
-// import { useRegisterUserMutation } from '../../redux'
 
 function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
   const { title, fields, submitLabel, footer } = template
-  // console.log(valuesProps)
   const {
     register,
     handleSubmit,
     watch,
     setError,
     setValue,
-    // getValues,
-    // reset,
     formState: { errors },
   } = useForm({
     mode: 'onTouched',
   })
 
   const onSubmitForm = (data) => {
-    // console.log(data)
     onSubmit(data)
-    // reset()
   }
 
   useEffect(() => {
@@ -39,7 +32,7 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
       const arrvaluesProps = Object.entries(valuesProps)
       arrvaluesProps.forEach(([name, val]) => setValue(name, val))
     }
-  }, [valuesProps])
+  }, [])
 
   const renderFields = (arrFields) => arrFields.map((field, index) => {
       const { label, name, type, placeholder, validationProps, matchField } = field
@@ -53,7 +46,6 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
             <label key={index} className={s.card__label}>
               {label}
               <input
-                // key={name}
                 type={type}
                 placeholder={placeholder}
                 className={classNames(s.card__input, { [s.error]: errors[name] })}
@@ -77,7 +69,6 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
                 <input
                   type="checkbox"
                   className={classNames(s.card__input, { [s.error]: errors[name] })}
-                  // className={s.card__input}
                   {...register(name, validationProps)}
                 />
                 {label}
@@ -107,7 +98,3 @@ function UserForm({ template, onSubmit, errorsProps, valuesProps }) {
 }
 
 export default UserForm
-
-// username(pin):"vitalka"
-// email(pin):"vvv@vvv.ru"
-// pass '123456'

@@ -5,13 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './components/App/App'
 import { store } from './redux'
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <div>Hello world!</div>,
-//   },
-// ])
-
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>

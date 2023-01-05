@@ -4,7 +4,7 @@ import Tag from '../UI/Tag'
 function TagList({ arrTags }) {
   return (
     <ul>
-      {arrTags.length &&
+      {arrTags &&
         arrTags.map((tag, index) => {
           if (tag) {
             const tagTrim = tag.trim()

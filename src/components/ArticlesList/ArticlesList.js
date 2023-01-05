@@ -5,19 +5,23 @@ import ArticleCard from '../ArticleCard'
 import LoadIndicator from '../UI/LoadIndicator'
 import s from './ArticlesList.module.scss'
 import { useGetArticlesQuery } from '../../redux'
+import ErrorIndicator from '../UI/ErrorIndicator'
 
 function ArticlesList() {
   const [searchParams, setSearchParams] = useSearchParams()
   const limit = searchParams.get('limit') || 5
   const offset = searchParams.get('offset') || 0
-  console.log(limit, offset)
-  const { data = [], isLoading } = useGetArticlesQuery({
+  const { data = [], isLoading, isError, error } = useGetArticlesQuery({
     limit,
     offset,
   })
 
   const handlePaginationPage = (currentPage, pageSizeSelect) => {
     setSearchParams({ limit: pageSizeSelect, offset: currentPage * pageSizeSelect - pageSizeSelect })
+  }
+
+  if (isError) {
+    return <ErrorIndicator error={error.status} />
   }
 
   if (isLoading) {

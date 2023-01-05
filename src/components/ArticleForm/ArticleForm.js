@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import { useForm, useFieldArray } from 'react-hook-form'
-// import { useNavigate } from 'react-router-dom'
 import s from './ArticleForm.module.scss'
 
 function ArticleForm({ title, article, onSubmit }) {
@@ -26,18 +25,11 @@ function ArticleForm({ title, article, onSubmit }) {
   })
 
   useEffect(() => {
-    if (errors) {
-      console.log(errors)
-    }
-  }, [errors])
-
-  useEffect(() => {
     if (article) {
       const { title: titleArticle, description, body } = article
       setValue('title', titleArticle)
       setValue('description', description)
       setValue('body', body)
-      // setTags(tagList)
     }
   }, [article])
 
@@ -47,9 +39,6 @@ function ArticleForm({ title, article, onSubmit }) {
       ...fl,
       tagList: lastTag ? [...tagList, lastTag] : tagList,
     }
-    console.log('oldData', data)
-    // console.log('newFields', newFields)
-    console.log('newFields', newFields)
     onSubmit(newFields)
   }
 

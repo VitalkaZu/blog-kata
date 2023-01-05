@@ -6,9 +6,7 @@ import s from './ArticleCard.module.scss'
 import TagList from '../TagList/TagList'
 import Like from '../Like'
 import User from '../UI/User/User'
-// import CustomButton from '../UI/CustomButton'
 import { useAuth } from '../../hooks/useAuth'
-// import { useFavoriteArticleMutation, useUnFavoriteArticleMutation } from '../redux'
 import { useFavoriteArticleMutation, useUnFavoriteArticleMutation, useDeleteArticleMutation } from '../../redux'
 
 function ArticleCard({ article, markDown }) {
@@ -22,23 +20,18 @@ function ArticleCard({ article, markDown }) {
   const handleLike = async (slug) => {
     if (article.favorited) {
       await dislike(slug)
-      // console.log('dislike', slug)
     } else {
       await like(slug)
-      // console.log('like', slug)
     }
   }
-
-  const text = 'Are you sure to delete this article?'
-  const description = 'Delete the article'
 
   const confirm = async () => {
     try {
       await deleteArticle(article.slug)
-      message.info('Article has been deleted')
+      message.success('Article has been deleted')
       navigate('/', { replace: true })
     } catch (e) {
-      console.log(e)
+      message.error(`Error ${e.status}`)
     }
   }
 
@@ -55,6 +48,7 @@ function ArticleCard({ article, markDown }) {
               count={article.favoritesCount}
               favorited={article.favorited}
               handleLike={() => handleLike(article.slug)}
+              disable={!username}
             />
           </div>
           <TagList arrTags={article.tagList} />
@@ -66,13 +60,12 @@ function ArticleCard({ article, markDown }) {
             <div className={s.card__btns}>
               <Popconfirm
                 placement="right"
-                title={text}
-                description={description}
+                title="Are you sure to delete this article?"
+                description="Delete the article"
                 onConfirm={confirm}
                 okText="Yes"
                 cancelText="No"
               >
-                {/* <CustomButton cl="deleteBtn">Delete</CustomButton> */}
                 <button className="deleteBtn" type="button">
                   Delete
                 </button>

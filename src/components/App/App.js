@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react'
-// import { useGetArticlesQuery } from '../../redux'
 import { Route, Routes } from 'react-router-dom'
-// import { useDispatch } from 'react-redux'
 import { useAuth } from '../../hooks/useAuth'
 import { useLazyGetProfileQuery } from '../../redux/blogApi'
 import ArticlesList from '../ArticlesList'
 import './reset.scss'
 import './glogal.scss'
 import Header from '../Header'
-// import Home from '../../Pages/Home'
 import SignUp from '../../Pages/SignUp'
 import SignIn from '../../Pages/SignIn'
 import ArticlePage from '../../Pages/ArticlePage'
@@ -16,40 +13,17 @@ import UserProfile from '../../Pages/UserProfile'
 import EditArticle from '../../Pages/EditArticle'
 import { WithAuth } from '../../HOC/WithAuth'
 import NewPost from '../../Pages/NewPost'
-// import { setToken, setUser } from '../../redux/slices/userSlice'
+import NotFoundPage from '../../Pages/NotFoundPage'
 
 function App() {
   const [trigger] = useLazyGetProfileQuery()
   const { isAuth } = useAuth()
-
-  // useGetProfileQuery({ skip: !localStorage.getItem('token') })
-  // const dispatch = useDispatch()
-  // const { getProfile } = useGetProfileQuery()
-  // const { username, token } = useAuth()
 
   useEffect(() => {
     if (localStorage.getItem('token') && !isAuth) {
       trigger()
     }
   }, [isAuth])
-  // useEffect(() => {
-  //   if (!username && localStorage.getItem('token')) {
-  //     const fetchData = async () => {
-  //       await dispatch(setToken(localStorage.getItem('token')))
-  //       // You can await here
-  //       // const response = await MyAPI.getData(someId)
-  //       console.log('call async function')
-  //       // ...
-  //     }
-  //     fetchData()
-  //     // await dispatch(setToken(localStorage.getItem('token')))
-  //     // const { user } = useGetProfileQuery()
-  //     if (getProfile) {
-  //       dispatch(setUser(getProfile))
-  //     }
-  //     console.log('token in localstorage >>>>', localStorage.getItem('token'))
-  //   }
-  // }, [token, getProfile])
 
   return (
     <Routes>
@@ -65,6 +39,7 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/articles/:slug/edit" element={<EditArticle />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   )

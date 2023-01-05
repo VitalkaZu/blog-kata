@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { message } from 'antd'
 import ArticleForm from '../components/ArticleForm'
 import { useAddArticleMutation } from '../redux'
 
@@ -12,13 +13,12 @@ function NewPost() {
       const newArticle = await addArticle({
         article: {
           ...data,
-          // tagList: tags,
         },
       }).unwrap()
-      console.log(newArticle)
+      message.success('Article created')
       navigate(`/articles/${newArticle.article.slug}`)
     } catch (err) {
-      console.log(err)
+      message.error(err.status)
     }
   }
 

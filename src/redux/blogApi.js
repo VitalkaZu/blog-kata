@@ -16,7 +16,6 @@ export const blogApi = createApi({
   endpoints: (build) => ({
     getArticles: build.query({
       query: ({ limit, offset }) => `articles?limit=${limit}&offset=${offset}`,
-      // providesTags: ['Article'],
       // eslint-disable-next-line arrow-body-style
       providesTags: (result) => {
         return result ? [...result.articles.map(({ slug }) => ({ type: 'Article', id: slug })), 'Article'] : ['Article']
@@ -24,8 +23,6 @@ export const blogApi = createApi({
     }),
     getArticle: build.query({
       query: (slug) => `articles/${slug}`,
-      // eslint-disable-next-line arrow-body-style
-
       providesTags: (result, error, arg) => [{ type: 'Article', id: arg }],
     }),
     registerUser: build.mutation({
@@ -65,8 +62,6 @@ export const blogApi = createApi({
           method: 'POST',
         }
       },
-      // invalidatesTags: [{ type: 'Article', id: 1 }],
-      // invalidatesTags: ['Article'],
       invalidatesTags: (result, error, arg) => [{ type: 'Article', id: arg }],
     }),
     unFavoriteArticle: build.mutation({
@@ -76,12 +71,10 @@ export const blogApi = createApi({
           method: 'DELETE',
         }
       },
-      // invalidatesTags: ['Article'],
       invalidatesTags: (result, error, arg) => [{ type: 'Article', id: arg }],
     }),
     addArticle: build.mutation({
       query(body) {
-        console.log(body)
         return {
           url: 'articles',
           method: 'POST',
@@ -92,24 +85,22 @@ export const blogApi = createApi({
     }),
     deleteArticle: build.mutation({
       query(slug) {
-        // console.log(body)
         return {
           url: `articles/${slug}`,
           method: 'DELETE',
         }
       },
-      invalidatesTags: ['Article'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Article', id: arg }],
     }),
     updateArticle: build.mutation({
       query({ article, slug }) {
-        // console.log(body)
         return {
           url: `articles/${slug}`,
           method: 'PUT',
           body: { article },
         }
       },
-      invalidatesTags: ['Article'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Article', id: arg.slug }],
     }),
   }),
 })
@@ -125,6 +116,5 @@ export const {
   useAddArticleMutation,
   useDeleteArticleMutation,
   useUpdateArticleMutation,
-  useGetProfileQuery,
   useLazyGetProfileQuery,
 } = blogApi

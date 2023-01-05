@@ -1,12 +1,14 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { message } from 'antd'
 import ArticleForm from '../components/ArticleForm'
 import { useUpdateArticleMutation, useGetArticleQuery } from '../redux'
+import ErrorIndicator from '../components/UI/ErrorIndicator'
+import LoadIndicator from '../components/UI/LoadIndicator'
 
 function EditArticle() {
   const { slug } = useParams()
-  console.log('slug   >>>>  ', slug)
-  const { data = {}, isLoading, isError } = useGetArticleQuery(slug)
+  const { data = {}, isLoading, isError, error } = useGetArticleQuery(slug)
   const navigate = useNavigate()
   const [updateArticle, { isLoading: isUpdateArticle }] = useUpdateArticleMutation()
   const handleUpdateArticle = async (updArticle) => {
@@ -14,35 +16,29 @@ function EditArticle() {
       await updateArticle({
         article: {
           ...updArticle,
-          // tagList: tags,
         },
         slug,
       }).unwrap()
+      message.success('Article updated')
       navigate(`/articles/${slug}`)
     } catch (err) {
-      console.log(err)
+      message.error(`Error ${err.status}`)
     }
   }
 
   if (isUpdateArticle) {
-    return <h1>Updating</h1>
+    return <LoadIndicator tip="Update article" />
   }
 
   if (isLoading) {
-    return <h1>LOADING</h1>
+    return <LoadIndicator tip="Load article info" />
   }
 
   if (isError) {
-    return <h1>Error</h1>
+    return <ErrorIndicator error={error} />
   }
 
-  // console.log(data)
-  return (
-    <>
-      <h1>Edit Article Page</h1>
-      <ArticleForm title="Create new article" article={data.article} onSubmit={handleUpdateArticle} />
-    </>
-  )
+  return <ArticleForm title="Edit article" article={data.article} onSubmit={handleUpdateArticle} />
 }
 
 export default EditArticle
