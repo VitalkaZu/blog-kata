@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { message } from 'antd'
+import { useAuth } from '../hooks/useAuth'
 import ArticleForm from '../components/ArticleForm'
 import { useUpdateArticleMutation, useGetArticleQuery } from '../redux'
 import ErrorIndicator from '../components/UI/ErrorIndicator'
@@ -11,6 +12,12 @@ function EditArticle() {
   const { data = {}, isLoading, isError, error } = useGetArticleQuery(slug)
   const navigate = useNavigate()
   const [updateArticle, { isLoading: isUpdateArticle }] = useUpdateArticleMutation()
+  const { username } = useAuth()
+
+  if (data.article.author.username !== username) {
+    navigate(`/articles/${slug}`)
+  }
+
   const handleUpdateArticle = async (updArticle) => {
     try {
       await updateArticle({

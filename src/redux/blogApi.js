@@ -33,6 +33,7 @@ export const blogApi = createApi({
           body,
         }
       },
+      invalidatesTags: ['Article'],
     }),
     loginUser: build.mutation({
       query(body) {
@@ -42,6 +43,7 @@ export const blogApi = createApi({
           body,
         }
       },
+      invalidatesTags: ['Article'],
     }),
     updateUser: build.mutation({
       query(body) {

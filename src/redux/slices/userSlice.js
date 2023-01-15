@@ -23,6 +23,7 @@ const userSlice = createSlice({
     builder.addMatcher(
       isAnyOf(
         blogApi.endpoints.loginUser.matchFulfilled,
+        blogApi.endpoints.registerUser.matchFulfilled,
         blogApi.endpoints.updateUser.matchFulfilled,
         blogApi.endpoints.getProfile.matchFulfilled
       ),

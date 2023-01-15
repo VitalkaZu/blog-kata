@@ -5,12 +5,14 @@ import s from './Header.module.scss'
 import User from '../UI/User/User'
 import { useAuth } from '../../hooks/useAuth'
 import { clearUser } from '../../redux/slices/userSlice'
+import { blogApi } from '../../redux'
 
 function Header() {
   const dispatch = useDispatch()
   const { isAuth, username, image } = useAuth()
   const handlerLogOut = () => {
     dispatch(clearUser())
+    dispatch(blogApi.util.invalidateTags(['Article']))
   }
 
   return (
